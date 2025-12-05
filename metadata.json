@@ -1,0 +1,5 @@
+{
+  "name": "GIF动图序列合成器",
+  "description": "一款专业的GIF帧动画合成与预览工具。支持多图合并、序列帧切割预览、速度调整及缩放查看。",
+  "requestFramePermissions": []
+}
