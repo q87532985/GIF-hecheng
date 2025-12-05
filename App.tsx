@@ -129,6 +129,24 @@ function App() {
     }
   };
 
+  const handleReset = () => {
+    if (frames.length === 0 && !spriteConfig.originalImage) return;
+
+    if (window.confirm('确定要清空当前所有内容并重置吗？')) {
+      setFrames([]);
+      setSpriteConfig({
+        rows: 1,
+        cols: 1,
+        totalFrames: 1,
+        originalImage: null
+      });
+      setIsPlaying(false);
+      setCurrentFrameIndex(0);
+      setFps(8);
+      setScale(1);
+    }
+  };
+
   // Sprite Config Handlers
   const handleGridChange = (key: 'rows' | 'cols', value: number) => {
     const newVal = Math.max(1, value);
@@ -147,12 +165,21 @@ function App() {
       
       {/* Sidebar Controls */}
       <div className="w-80 flex flex-col border-r border-gray-800 bg-gray-900 overflow-y-auto custom-scrollbar z-10 shrink-0">
-        <div className="p-6 border-b border-gray-800">
-          <h1 className="text-xl font-bold flex items-center gap-2 text-blue-400">
-            <Layers className="w-6 h-6" />
-            序列合成器
-          </h1>
-          <p className="text-xs text-gray-500 mt-1">GIF/Sprite Sheet 工具</p>
+        <div className="p-6 border-b border-gray-800 flex justify-between items-center">
+          <div>
+            <h1 className="text-xl font-bold flex items-center gap-2 text-blue-400">
+              <Layers className="w-6 h-6" />
+              序列合成器
+            </h1>
+            <p className="text-xs text-gray-500 mt-1">GIF/Sprite Sheet 工具</p>
+          </div>
+          <button 
+            onClick={handleReset} 
+            className="p-2 text-gray-500 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+            title="重置所有"
+          >
+            <RefreshCw className="w-5 h-5" />
+          </button>
         </div>
 
         {/* Mode Switcher */}
@@ -351,9 +378,19 @@ function App() {
           <div className="flex items-center gap-4">
             {/* Scale Control */}
             <div className="flex items-center gap-2 bg-gray-800 px-3 py-1.5 rounded-full border border-gray-700">
-               <button onClick={() => setScale(s => Math.max(0.1, s - 0.5))} className="text-gray-400 hover:text-white"><ZoomOut className="w-4 h-4"/></button>
-               <span className="w-12 text-center text-xs font-mono">{scale.toFixed(1)}x</span>
-               <button onClick={() => setScale(s => Math.min(10, s + 0.5))} className="text-gray-400 hover:text-white"><ZoomIn className="w-4 h-4"/></button>
+               <button 
+                 onClick={() => setScale(s => Math.max(0.1, Number((s - 0.1).toFixed(1))))} 
+                 className="text-gray-400 hover:text-white"
+               >
+                 <ZoomOut className="w-4 h-4"/>
+               </button>
+               <span className="w-16 text-center text-xs font-mono">{Math.round(scale * 100)}%</span>
+               <button 
+                 onClick={() => setScale(s => Math.min(10, Number((s + 0.1).toFixed(1))))} 
+                 className="text-gray-400 hover:text-white"
+               >
+                 <ZoomIn className="w-4 h-4"/>
+               </button>
             </div>
 
             {/* Color Picker */}
