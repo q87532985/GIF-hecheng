@@ -1,5 +1,5 @@
 {
-  "name": "gif动图序列合成器",
+  "name": "gif序列帧合成器",
   "private": true,
   "version": "0.0.0",
   "type": "module",

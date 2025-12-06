@@ -121,12 +121,12 @@ export const generateGif = async (
     // 4. Initialize GIF
     const gif = new GIF({
         workers: 2,
-        quality: 10,
+        quality: 1, // Best quality (1 is best, 10 is default/worst)
         width,
         height,
         workerScript: workerUrl,
-        background: backgroundColor, // Note: gif.js handles hex codes usually, but transparent is default
-        transparent: null // Set to null to use background color or specific hex if needed
+        background: backgroundColor, 
+        transparent: null 
     });
 
     const canvas = document.createElement('canvas');
